@@ -21,18 +21,20 @@ All basic Kurento libraries are needed as mentioned in [How to Develop Kurento M
 
 Please make sure Boost C++ and OpenCV and all -dev packages are installed.
 
+```
 DISTRO="xenial"
 sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 5AFA7A83
-
+```
 and then
 
+```
 sudo tee "/etc/apt/sources.list.d/kurento.list" >/dev/null <<EOF
 deb [arch=amd64] http://ubuntu.openvidu.io/6.8.1 $DISTRO kms6
 EOF
 
 sudo apt-get update
 sudo apt-get install kurento-media-server-dev
-
+```
 
 
 ## Compiling:
@@ -54,17 +56,20 @@ make install
 ```
 
 If you get an error similar to this
+```
 /usr/bin/ld: libkmsmeetrixkurentohelloworldinterface.a(MeetrixKurentoHelloWorldInternal.cpp.o): relocation R_X86_64_32 against `.rodata' can not be used when making a shared object; recompile with -fPIC
 libkmsmeetrixkurentohelloworldinterface.a: error adding symbols: Bad value
-
+```
 open CMakeLists.txt file in module directory and locate following line. 
+```
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -DHAVE_CONFIG_H -Wall -Werror -std=c++11")
-
+```
 then replace it with following line (we are just adding -fPIC flag here)
-
+```
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -fPIC -DHAVE_CONFIG_H -Wall -Werror -std=c++11")
-
+```
 and then re-run command
+```
 make install
 ```
 
